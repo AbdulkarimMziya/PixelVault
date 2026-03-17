@@ -10,4 +10,7 @@ import Foundation
 enum AppError: Error {
     case noResponse
     case badStatusCode(String)
+    case invalidURL(String)
+    case noSearchQuery
+    case decodingError(Error)
 }
