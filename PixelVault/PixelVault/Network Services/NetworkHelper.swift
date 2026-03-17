@@ -13,7 +13,7 @@ class NetworkHelper {
     
     private var session: URLSession
     
-    init() {
+    private init() {
         session = URLSession(configuration: .default)
     }
     
