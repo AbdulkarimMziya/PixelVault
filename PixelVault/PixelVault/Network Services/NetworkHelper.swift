@@ -21,11 +21,11 @@ class NetworkHelper {
         let (data,response) = try await session.data(for: urlRequest)
         
         guard let httpResponse = response as? HTTPURLResponse else {
-            throws AppError.noResponse
+            throw AppError.noResponse
         }
         
         guard (200...299).contains(httpResponse.statusCode) else {
-            throws AppError.badStatusCode(httpResponse.statusCode)
+            throw AppError.badStatusCode(httpResponse.statusCode.description)
         }
         
         return data
