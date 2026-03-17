@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4D2DF1EA2F694CEE004F502E /* Exceptions for "PixelVault" folder in "PixelVault" target */ = {
+		4D2DF2142F695519004F502E /* Exceptions for "PixelVault" folder in "PixelVault" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -24,7 +24,7 @@
 		4D2DF1DA2F694CED004F502E /* PixelVault */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				4D2DF1EA2F694CEE004F502E /* Exceptions for "PixelVault" folder in "PixelVault" target */,
+				4D2DF2142F695519004F502E /* Exceptions for "PixelVault" folder in "PixelVault" target */,
 			);
 			path = PixelVault;
 			sourceTree = "<group>";
