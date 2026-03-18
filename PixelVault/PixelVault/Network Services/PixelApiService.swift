@@ -13,7 +13,7 @@ class PixelApiService {
         case get = "GET"
     }
     
-    private func makeURL(searchQuery: String) -> URL? {
+    private static func makeURL(searchQuery: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "pixabay.com"
@@ -29,7 +29,7 @@ class PixelApiService {
     }
     
     
-    func fetchAllPosts(with searchQuery: String?) async throws -> PixelAPIModel {
+    static func fetchAllPosts(with searchQuery: String?) async throws -> PixelAPIModel {
         guard let query = searchQuery else {
             throw AppError.noSearchQuery
         }
