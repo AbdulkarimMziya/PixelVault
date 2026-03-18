@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var imageCache = [Int: UIImage]()
+    
     var posts = [Post]() {
         didSet{
             collectionView.reloadData()
@@ -29,7 +31,7 @@ class ViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        cv.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: PostCollectionViewCell.reuseIdentifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
@@ -44,6 +46,7 @@ class ViewController: UIViewController {
         searchBar.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.prefetchDataSource = self
         
         setupUI()
     }
@@ -64,13 +67,15 @@ class ViewController: UIViewController {
     }
     
     func performSearch(searchQuery: String) {
+        self.imageCache.removeAll()
+        
         Task {
             do {
                 let result = try await PixelApiService.fetchAllPosts(with: searchQuery)
         
                 self.posts = result.hits
                 
-                print("Total Posts: \(result.hits.count)")
+                print("Total Posts: \(self.posts.count)")
             } catch {
                 print(error)
             }
