@@ -24,16 +24,30 @@ class ViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         view.addSubview(searchBar)
+        searchBar.delegate = self
+        
         setupUI()
     }
     
     private func setupUI() {
+        
         
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 48),
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+    
+    func performSearch(searchQuery: String) {
+        Task {
+            do {
+                let result = try await PixelApiService.fetchAllPosts(with: searchQuery)
+                print("Total Posts: \(result.hits.count)")
+            } catch {
+                print(error)
+            }
+        }
     }
 
 }
