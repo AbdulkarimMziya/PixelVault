@@ -86,3 +86,13 @@ extension ViewController: UICollectionViewDataSourcePrefetching {
     
     
 }
+
+
+extension ViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let post = posts[indexPath.item]
+        
+        let detailVC = PostDetailViewController(post: post)
+        present(detailVC, animated: true)
+    }
+}
