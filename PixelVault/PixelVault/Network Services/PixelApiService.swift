@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PixelApiService {
     
@@ -48,6 +49,16 @@ class PixelApiService {
         } catch {
             throw AppError.decodingError(error)
         }
+    }
+    
+    static func fetchImage(from urlString: String) async throws -> UIImage? {
+        guard let url = URL(string: urlString) else {
+            throw AppError.invalidURL(urlString)
+        }
+        let urlRequest = URLRequest(url: url)
+
+        let data = try await NetworkHelper.shared.performTask(urlRequest: urlRequest)
+        return UIImage(data: data)
     }
 }
 
