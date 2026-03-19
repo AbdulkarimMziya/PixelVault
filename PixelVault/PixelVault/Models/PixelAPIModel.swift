@@ -18,6 +18,9 @@ struct Post: Identifiable, Codable {
     let authorImageURL: String
     let previewImageURL: String
     let mediumSizeImageURL: String
+    let views: Int
+    let downloads: Int
+    let likes: Int
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -25,6 +28,9 @@ struct Post: Identifiable, Codable {
         case authorImageURL = "userImageURL"
         case previewImageURL = "previewURL"
         case mediumSizeImageURL = "webformatURL"
+        case views
+        case downloads
+        case likes
     }
 }
 
