@@ -12,8 +12,8 @@ A modern iOS image discovery app built with Swift and UIKit that fetches and dis
 
 ## Screenshots
 <p align="center">
-   <img src="https://github.com/AbdulkarimMziya/AbdulkarimMziya/blob/main/images/PixelVault1.gif" alt="App demo" width="150" /> 
-   <img src="https://github.com/AbdulkarimMziya/AbdulkarimMziya/blob/main/images/PixelVault1.gif" alt="App demo" width="150" hspace="10"/>
+    <img src="https://github.com/AbdulkarimMziya/AbdulkarimMziya/blob/main/images/PixelVaultDemo1.gif" alt="Taskmaster Demo" width="150"/> 
+    <img src="https://github.com/AbdulkarimMziya/AbdulkarimMziya/blob/main/images/PixelVaultDemo2.gif" alt="Taskmaster Demo" width="150" hspace="16"/> 
 </p>
 
 
