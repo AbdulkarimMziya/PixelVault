@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum PersistanceError: Error {
+    case savingError(Error)
+    case loadingDataError(Error)
+    case deletionError(Error)
+}
