@@ -35,12 +35,22 @@ class ViewController: UIViewController {
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
+    
+    lazy var segmentedControl: UISegmentedControl = {
+        let items = ["Search", "Favourites"]
+        let control = UISegmentedControl(items: items)
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.selectedSegmentIndex = 0
+        control.addTarget(self, action:#selector(segmentedControlValueChanged(_:)), for: .valueChanged)
+        return control
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
         view.addSubview(searchBar)
+        view.addSubview(segmentedControl)
         view.addSubview(collectionView)
         
         searchBar.delegate = self
@@ -51,6 +61,14 @@ class ViewController: UIViewController {
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // This catches every return trip (Back button, swipe, or pop)
+        segmentedControl.selectedSegmentIndex = 0
+    }
+
+    
     private func setupUI() {
         
         
@@ -59,7 +77,11 @@ class ViewController: UIViewController {
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 8),
+            segmentedControl.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 12),
+            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            collectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -79,6 +101,22 @@ class ViewController: UIViewController {
             } catch {
                 print(error)
             }
+        }
+    }
+    
+    @objc
+    func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        let selectedTitle = sender.titleForSegment(at: sender.selectedSegmentIndex)
+        
+        if selectedTitle == "Favourites" {
+            // Only push if the current top view is NOT already Favorites
+            if !(navigationController?.topViewController is FavoritePostsViewController) {
+                let favoriteVC = FavoritePostsViewController()
+                navigationController?.pushViewController(favoriteVC, animated: true)
+            }
+        } else {
+            // If they tap "Search", pop back to the main view
+            navigationController?.popToRootViewController(animated: true)
         }
     }
 
