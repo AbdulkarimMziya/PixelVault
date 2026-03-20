@@ -9,11 +9,13 @@ import UIKit
 
 class FavoritePostsViewController: UIViewController {
     
-    // Central data source
-    var favoritePosts: [Post] {
-        return PersistanceService.posts
+    var favoritePosts: [Post] = [] {
+        didSet {
+            imageCache.removeAll()
+            collectionView.reloadData()
+        }
     }
-    
+
     var imageCache = [Int: UIImage]()
     
     lazy var collectionView: UICollectionView = {
@@ -41,7 +43,8 @@ class FavoritePostsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Refresh the list every time the user comes to this screen
-        collectionView.reloadData()
+        try? PersistanceService.load()
+        favoritePosts = PersistanceService.posts
     }
     
     private func setupConstraints() {
