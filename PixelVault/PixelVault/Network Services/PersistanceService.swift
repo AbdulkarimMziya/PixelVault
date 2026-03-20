@@ -29,6 +29,15 @@ class PersistanceService {
     static func load() throws {
         let url = PersistanceManager.shared.fileFromDocumentDirectory(filename: filename)
         
+        let fileExists = FileManager.default.fileExists(atPath: url.path)
+        
+        if !fileExists {
+            posts = []
+            
+            print("File D.N.E: \(url.path)")
+            return
+        }
+        
         do {
             let data = try Data(contentsOf: url)
             
