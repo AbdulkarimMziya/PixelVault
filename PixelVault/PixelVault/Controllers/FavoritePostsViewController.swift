@@ -30,7 +30,7 @@ class FavoritePostsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "Favorites"
+        title = "Favourites"
         
         view.addSubview(collectionView)
         collectionView.dataSource = self
