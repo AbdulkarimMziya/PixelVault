@@ -12,7 +12,14 @@ class PostDetailViewController: UIViewController {
     private let post: Post
     
     // MARK: - UI Elements
-    
+    private let favoriteButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.tintColor = .systemGray
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     private let authorImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -69,10 +76,16 @@ class PostDetailViewController: UIViewController {
         setupUI()
         configure()
         loadMediumImage()
+        
+        try? PersistanceService.load()
+        updateFavoriteButton()
     }
     
     // MARK: - Setup UI
     private func setupUI() {
+        view.addSubview(favoriteButton)
+        favoriteButton.addTarget(self, action: #selector(didTapFavorite), for: .touchUpInside)
+
         view.addSubview(authorImageView)
         view.addSubview(authorLabel)
         view.addSubview(imageView)
@@ -89,6 +102,12 @@ class PostDetailViewController: UIViewController {
             authorLabel.centerYAnchor.constraint(equalTo: authorImageView.centerYAnchor),
             authorLabel.leadingAnchor.constraint(equalTo: authorImageView.trailingAnchor, constant: 12),
             authorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            // Favorite Button
+            favoriteButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            favoriteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 30),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 30),
             
             // Main image
             imageView.topAnchor.constraint(equalTo: authorImageView.bottomAnchor, constant: 16),
@@ -129,6 +148,40 @@ class PostDetailViewController: UIViewController {
             }
         }
     }
+    
+    @objc
+    private func didTapFavorite() {
+        do {
+            try PersistanceService.load()
+            
+            let isFavorited = PersistanceService.posts.contains { $0.id == post.id }
+            
+            if isFavorited {
+                try PersistanceService.delete(id: post.id)
+            } else {
+                PersistanceService.posts.append(post)
+                try PersistanceService.save(PersistanceService.posts)
+            }
+            
+            updateFavoriteButton()
+    
+            
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func updateFavoriteButton() {
+        let isFavorited = PersistanceService.posts.contains { $0.id == post.id }
+        
+        let imageName = isFavorited ? "star.fill" : "star"
+        let tintColor: UIColor = isFavorited ? .systemYellow : .systemGray
+        
+        favoriteButton.setImage(UIImage(systemName: imageName), for: .normal)
+        favoriteButton.tintColor = tintColor
+    }
+
+
     
     // Helper function to combine icon + text
     private func iconText(systemName: String, value: String) -> NSAttributedString {
