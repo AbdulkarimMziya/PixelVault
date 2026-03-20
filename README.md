@@ -11,6 +11,10 @@ A modern iOS image discovery app built with Swift and UIKit that fetches and dis
 - Navigate between Search and Favorites using a segmented control
 
 ## Screenshots
+<p align="center">
+   <img src="https://github.com/AbdulkarimMziya/AbdulkarimMziya/blob/main/images/PixelVault1.gif" alt="App demo" width="150" /> 
+   <img src="https://github.com/AbdulkarimMziya/AbdulkarimMziya/blob/main/images/PixelVault1.gif" alt="App demo" width="150" hspace="10"/>
+</p>
 
 
 ## Requirements
